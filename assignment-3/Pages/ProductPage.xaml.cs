@@ -28,7 +28,6 @@ namespace assignment_3.Pages
         public ProductPage()
         {
             InitializeComponent();
-            RetrieveProducts();
             PopulateListView().ConfigureAwait(false);
             PopulateCombobox().ConfigureAwait(false);
             
@@ -109,7 +108,7 @@ namespace assignment_3.Pages
         {
             using var client = new HttpClient();
 
-
+            
             await client.PostAsJsonAsync("https://localhost:7072/api/Product", new ProductRequest
             {
                 Name = tb_Productname.Text,
@@ -117,15 +116,34 @@ namespace assignment_3.Pages
                 Price = decimal.Parse(tb_Productprice.Text)
             });
 
+            productcollection.Add(new ProductModel
+            {
+                Name = tb_Productname.Text,
+                Description = tb_Description.Text,
+                Price = decimal.Parse(tb_Productprice.Text)
+            });
             ClearText();
-            RetrieveProducts();
+            
             lvProducts.Items.Refresh();
+            cb_Products.Items.Refresh();
+            
         
         }
         public async void RetrieveProducts()
         {
             using var client = new HttpClient();
             await client.GetFromJsonAsync<IEnumerable<ProductModel>>("https://localhost:7072/api/Product");
+        }
+
+        private void lvProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var product = (ProductModel)lvProducts.SelectedItem;
+            if (product != null)
+            {
+                tb_Productname.Text = product.Name;
+                tb_Description.Text = product.Description;
+                tb_Productprice.Text = product.Price.ToString();
+            }
         }
     }
 }

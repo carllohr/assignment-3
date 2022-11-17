@@ -12,7 +12,6 @@ namespace assignment_3_api.Models.Entities
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         [Required]
-        [Column(TypeName = "money")]
         public decimal Price { get; set; }
         public ICollection<OrderRowEntity>? Rows { get; set; }
     }

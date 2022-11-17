@@ -32,17 +32,9 @@ namespace assignment_3.Pages
             lvProducts.ItemsSource = products;
         }
 
-        //private void btn_customerPage_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
         private ObservableCollection<ProductModel> products = new ObservableCollection<ProductModel>();
         public async Task PopulateCombobox()
         {
-
-
-
             using var client = new HttpClient();
 
             var customers = await client.GetFromJsonAsync<IEnumerable<CustomerModel>>("https://localhost:7072/api/Customer");
@@ -98,7 +90,7 @@ namespace assignment_3.Pages
                 rowPrice = item.Price * item.Quantity;
                 totalPrice += item.Price * item.Quantity;
             }
-            if (customer != null)
+            if (customer != null && products.Count > 0)
             {
                 try
                 {
@@ -108,7 +100,8 @@ namespace assignment_3.Pages
                         OrderDate = DateTime.Now,
                         Products = products,
                         Quantity = products.Count,
-                        TotalPrice = totalPrice
+                        TotalPrice = totalPrice,
+                        RowPrice = rowPrice
 
                     }) ;
 
@@ -119,11 +112,8 @@ namespace assignment_3.Pages
             }
             else
             {
-                MessageBox.Show("You need to select a customer to place an order");
+                MessageBox.Show("You need to select a customer and add products to place an order");
             }
-
-
-
         }
 
         private void btn_Clearorder_Click(object sender, RoutedEventArgs e)

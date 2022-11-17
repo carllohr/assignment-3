@@ -24,8 +24,6 @@ namespace assignment_3_api.Controllers
                 Created = req.OrderDate = DateTime.Now,
                 CustomerId = req.CustomerId,
                 TotalPrice = req.TotalPrice,
-
-
             };
             _context.Orders.Add(orderEntity);
             await _context.SaveChangesAsync();
@@ -38,17 +36,10 @@ namespace assignment_3_api.Controllers
                     ProductId = product.Id,
                     OrderId = orderEntity.Id,
                     Price = req.RowPrice
-
-
-
-
                 };
                 _context.OrderRows.Add(orderRow);
                 await _context.SaveChangesAsync();
-
             }
-
-
             return new OkResult();
         }
     }

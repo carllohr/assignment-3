@@ -14,6 +14,7 @@ namespace assignment_3.Models
         public int CustomerId { get; set; }
         public ObservableCollection<ProductModel>? Products { get; set; }
         public int Quantity { get; set; }
+        public decimal RowPrice { get; set; }
         public decimal TotalPrice { get; set; }
     }
 }

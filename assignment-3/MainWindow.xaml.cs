@@ -30,23 +30,10 @@ namespace assignment_3
             InitializeComponent();
             MainFrame.Content = new OrderPage();
         }
-      
-        private void btn_Add_Click(object sender, RoutedEventArgs e)
+        private void btn_OrderPage_Click(object sender, RoutedEventArgs e)
         {
-
+            MainFrame.Content = new OrderPage();
         }
-
-        //private async void btn_Addcustomer_Click(object sender, RoutedEventArgs e)
-        //{
-        //    using var client = new HttpClient();
-        //    await client.PostAsJsonAsync("https://localhost:7072/api/customer", new CustomerRequest
-        //    {
-        //        FirstName = tb_Firstname.Text,
-        //        LastName = tb_Lastname.Text,
-        //        Email = tb_Email.Text,
-        //    });
-        //}
-
         private void btn_customerPage_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new CustomerPage();
@@ -56,11 +43,6 @@ namespace assignment_3
         private void btn_productPage_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new ProductPage();
-        }
-
-        private void btn_OrderPage_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Content = new OrderPage();
         }
     }
 }
