@@ -1,0 +1,25 @@
+﻿<Window x:Class="assignment_3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:assignment_3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="*"/>
+            
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Button x:Name="btn_customerPage" Content="Customers" Click="btn_customerPage_Click" />
+            <Button x:Name="btn_productPage" Content="Products" Click="btn_productPage_Click" />
+            <Button x:Name="btn_OrderPage" Content="Order menu" Click="btn_OrderPage_Click"/>
+        </StackPanel>
+
+        <Frame Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+
+
+    </Grid>
+</Window>
