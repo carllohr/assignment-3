@@ -23,6 +23,7 @@ namespace assignment_3_api.Controllers
             {
                 Created = req.OrderDate = DateTime.Now,
                 CustomerId = req.CustomerId,
+                TotalPrice = req.TotalPrice,
 
 
             };
@@ -36,7 +37,7 @@ namespace assignment_3_api.Controllers
                     Quantity = product.Quantity,
                     ProductId = product.Id,
                     OrderId = orderEntity.Id,
-                    Price = req.TotalPrice
+                    Price = req.RowPrice
 
 
 

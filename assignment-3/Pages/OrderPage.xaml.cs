@@ -91,10 +91,12 @@ namespace assignment_3.Pages
             var url = "https://localhost:7072/api/Order";
             using var client = new HttpClient();
             var customer = (CustomerModel)cb_Customers.SelectedItem;
+            decimal rowPrice = 0;
             decimal totalPrice = 0;
             foreach (var item in products)
             {
-                totalPrice = item.Price * item.Quantity;
+                rowPrice = item.Price * item.Quantity;
+                totalPrice += item.Price * item.Quantity;
             }
             if (customer != null)
             {
@@ -108,9 +110,9 @@ namespace assignment_3.Pages
                         Quantity = products.Count,
                         TotalPrice = totalPrice
 
-                    });
+                    }) ;
 
-                    MessageBox.Show($"Order successfully created for customer {customer.FullName}");
+                    MessageBox.Show($"Order successfully created for customer {customer.FullName} for {totalPrice.ToString()} sek amount");
                     products.Clear();
                 }
                 catch { }

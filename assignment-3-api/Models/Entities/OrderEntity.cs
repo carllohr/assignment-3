@@ -13,6 +13,10 @@ namespace assignment_3_api.Models.Entities
         [Required]
         public int CustomerId { get; set; }
         public CustomerEntity Customer { get; set; } = null!;
+        [Column(TypeName = "money")]
+        public decimal TotalPrice { get; set; }
+
+
         public ICollection<OrderRowEntity> OrderRows { get; set; }
     }
 }

@@ -28,16 +28,18 @@ namespace assignment_3.Pages
         public ProductPage()
         {
             InitializeComponent();
+            RetrieveProducts();
             PopulateListView().ConfigureAwait(false);
             PopulateCombobox().ConfigureAwait(false);
             
-        }
 
+        }
+        private ObservableCollection<ProductModel> productcollection = new ObservableCollection<ProductModel>();
         public async Task PopulateListView()
         {
             using var client = new HttpClient();
             var products = await client.GetFromJsonAsync<IEnumerable<ProductModel>>("https://localhost:7072/api/Product");
-            var productcollection = new ObservableCollection<ProductModel>();
+            
 
             foreach (var product in products)
             {
@@ -45,7 +47,7 @@ namespace assignment_3.Pages
             }
 
             lvProducts.ItemsSource = productcollection;
-            Debug.WriteLine(productcollection);
+            
 
         }
 
@@ -90,12 +92,18 @@ namespace assignment_3.Pages
 
             await client.PutAsJsonAsync($"{productURL}?id={product.Id}", product);
             
+            ClearText();
 
+        }
+
+        public void ClearText()
+        {
             tb_Productname.Text = "";
             tb_Description.Text = "";
             tb_Productprice.Text = "";
-
         }
+
+        
 
         private async void btn_Createproduct_Click(object sender, RoutedEventArgs e)
         {
@@ -108,8 +116,16 @@ namespace assignment_3.Pages
                 Description = tb_Description.Text,
                 Price = decimal.Parse(tb_Productprice.Text)
             });
-            
 
+            ClearText();
+            RetrieveProducts();
+            lvProducts.Items.Refresh();
+        
+        }
+        public async void RetrieveProducts()
+        {
+            using var client = new HttpClient();
+            await client.GetFromJsonAsync<IEnumerable<ProductModel>>("https://localhost:7072/api/Product");
         }
     }
 }
