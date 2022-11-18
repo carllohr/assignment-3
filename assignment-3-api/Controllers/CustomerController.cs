@@ -28,6 +28,22 @@ namespace assignment_3_api.Controllers
             await _context.SaveChangesAsync();
             return new OkResult();
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(int id, CustomerRequest req)
+        {
+            var customerEntity = await _context.Customers.FindAsync(id);
+            if (customerEntity != null)
+            {
+                customerEntity.FirstName = req.FirstName;
+                customerEntity.LastName = req.LastName;
+                customerEntity.Email = req.Email;
+                _context.Entry(customerEntity).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return new OkResult();
+            }
+            return new NotFoundResult();
+
+        }
         [HttpGet]
         public async Task<IEnumerable<CustomerEntity>> GetAllAsync()
         {
@@ -37,14 +53,5 @@ namespace assignment_3_api.Controllers
             }
             catch { return null; }
         }
-
-        //public string FullName(CustomerEntity customer)
-        //{
-        //    try
-        //    {
-        //        return customer.FirstName + " " + customer.LastName;
-        //    }
-        //    catch { return null; }
-        //}
     }
 }

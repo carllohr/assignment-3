@@ -10,6 +10,7 @@
 
     <Grid>
         <StackPanel>
+            <ComboBox x:Name="cb_Customers" DisplayMemberPath="FullName" SelectionChanged="cb_Customers_SelectionChanged"/>
             <TextBlock Text="First name: "/>
             <TextBox x:Name="tb_Firstname" />
             <TextBlock Text="Last name: " />

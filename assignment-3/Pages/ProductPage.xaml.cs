@@ -28,31 +28,15 @@ namespace assignment_3.Pages
         public ProductPage()
         {
             InitializeComponent();
-            PopulateListView().ConfigureAwait(false);
             PopulateCombobox().ConfigureAwait(false);
             
 
         }
         private ObservableCollection<ProductModel> productcollection = new ObservableCollection<ProductModel>();
-        public async Task PopulateListView()
+
+        private async void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            using var client = new HttpClient();
-            var products = await client.GetFromJsonAsync<IEnumerable<ProductModel>>("https://localhost:7072/api/Product");
-            
-
-            foreach (var product in products)
-            {
-                productcollection.Add(product);
-            }
-
-            lvProducts.ItemsSource = productcollection;
-            
-
-        }
-
-        private void deleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+       
         }
         public async Task PopulateCombobox()
         {
@@ -93,6 +77,8 @@ namespace assignment_3.Pages
             
             ClearText();
 
+            await PopulateCombobox();
+
         }
 
         public void ClearText()
@@ -116,34 +102,9 @@ namespace assignment_3.Pages
                 Price = decimal.Parse(tb_Productprice.Text)
             });
 
-            productcollection.Add(new ProductModel
-            {
-                Name = tb_Productname.Text,
-                Description = tb_Description.Text,
-                Price = decimal.Parse(tb_Productprice.Text)
-            });
             ClearText();
-            
-            lvProducts.Items.Refresh();
-            cb_Products.Items.Refresh();
-            
-        
-        }
-        public async void RetrieveProducts()
-        {
-            using var client = new HttpClient();
-            await client.GetFromJsonAsync<IEnumerable<ProductModel>>("https://localhost:7072/api/Product");
-        }
 
-        private void lvProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var product = (ProductModel)lvProducts.SelectedItem;
-            if (product != null)
-            {
-                tb_Productname.Text = product.Name;
-                tb_Description.Text = product.Description;
-                tb_Productprice.Text = product.Price.ToString();
-            }
+            await PopulateCombobox();
         }
     }
 }

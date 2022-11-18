@@ -1,6 +1,7 @@
 ﻿using assignment_3.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -26,8 +27,22 @@ namespace assignment_3.Pages
         public CustomerPage()
         {
             InitializeComponent();
+            PopulateCombobox().ConfigureAwait(false);
         }
+        public async Task PopulateCombobox()
+        {
 
+            using var client = new HttpClient();
+            var customers = await client.GetFromJsonAsync<IEnumerable<CustomerModel>>("https://localhost:7072/api/Customer");
+            var customerCollection = new ObservableCollection<CustomerModel>();
+
+            foreach (var customer in customers)
+            {
+                customerCollection.Add(customer);
+            }
+
+            cb_Customers.ItemsSource = customerCollection;
+        }
         private async void btn_Addcustomer_Click(object sender, RoutedEventArgs e)
         {
             var url = "https://localhost:7072/api/Customer";
@@ -39,21 +54,43 @@ namespace assignment_3.Pages
                 LastName = tb_Lastname.Text,
                 Email = tb_Email.Text,
             });
-
-
+            await PopulateCombobox();
+            ClearText();
         }
 
-        private void btn_Updatecustomer_Click(object sender, RoutedEventArgs e)
+        private async void btn_Updatecustomer_Click(object sender, RoutedEventArgs e)
         {
             var url = "https://localhost:7072/api/Customer";
             using var client = new HttpClient();
 
-            //var customer = (ProductModel)cb_Products.SelectedItem;
-            //product.Name = tb_Productname.Text;
-            //product.Description = tb_Description.Text;
-            //product.Price = decimal.Parse(tb_Productprice.Text);
+            var customer = (CustomerModel)cb_Customers.SelectedItem;
+            customer.FirstName = tb_Firstname.Text;
+            customer.LastName = tb_Lastname.Text;
+            customer.Email = tb_Email.Text;
 
-            //await client.PutAsJsonAsync($"{productURL}?id={product.Id}", product);
+            await client.PutAsJsonAsync($"{url}?id={customer.Id}", customer);
+            await PopulateCombobox();
+            ClearText();
+            cb_Customers.SelectedIndex = 1;
+        }
+
+        public void ClearText()
+        {
+            tb_Firstname.Text = "";
+            tb_Lastname.Text = "";
+            tb_Email.Text = "";
+        }
+
+        private void cb_Customers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var customer = (CustomerModel)cb_Customers.SelectedItem;
+
+            if (customer != null)
+            {
+                tb_Firstname.Text = customer.FirstName;
+                tb_Lastname.Text = customer.LastName;
+                tb_Email.Text = customer.Email;
+            }
         }
     }
 }

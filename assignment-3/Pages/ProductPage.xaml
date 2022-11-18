@@ -9,11 +9,8 @@
       Title="ProductPage">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
+
+        <StackPanel Margin="10">
             <ComboBox x:Name="cb_Products" SelectionChanged="cb_Products_SelectionChanged" DisplayMemberPath="Name"/>
             <TextBlock Text="Product name: "/>
             <TextBox x:Name="tb_Productname"/>
@@ -21,21 +18,8 @@
             <TextBox x:Name="tb_Description"/>
             <TextBlock Text="Product price: "/>
             <TextBox x:Name="tb_Productprice"/>
-            <Button Style="{StaticResource addupdateButton}" x:Name="btn_Createproduct" Content="Create product" Click="btn_Createproduct_Click"/>
-            <Button x:Name="btn_Updateproduct" Style="{StaticResource addupdateButton}" Content="Update product" Click="btn_Updateproduct_Click"/>
+            <Button x:Name="btn_Createproduct" Content="Create product" Click="btn_Createproduct_Click" Margin="10"/>
+            <Button x:Name="btn_Updateproduct"  Content="Update product" Click="btn_Updateproduct_Click" Margin="10"/>
         </StackPanel>
-        <StackPanel Grid.Column="1">
-            <ListView Margin="10" Name="lvProducts" Grid.Row="1" SelectionChanged="lvProducts_SelectionChanged">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Price" Width="50" DisplayMemberBinding="{Binding Price}" />
-                        <GridViewColumn Header="Quantity" Width="150" DisplayMemberBinding="{Binding Quantity}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
-        
-
     </Grid>
 </Page>
