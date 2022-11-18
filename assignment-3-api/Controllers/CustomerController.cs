@@ -31,18 +31,28 @@ namespace assignment_3_api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(int id, CustomerRequest req)
         {
-            var customerEntity = await _context.Customers.FindAsync(id);
-            if (customerEntity != null)
+            try
             {
-                customerEntity.FirstName = req.FirstName;
-                customerEntity.LastName = req.LastName;
-                customerEntity.Email = req.Email;
-                _context.Entry(customerEntity).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return new OkResult();
+                var customerEntity = await _context.Customers.FindAsync(id);
+                if (customerEntity != null)
+                {
+                    customerEntity.FirstName = req.FirstName;
+                    customerEntity.LastName = req.LastName;
+                    customerEntity.Email = req.Email;
+                    _context.Entry(customerEntity).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                    return new OkResult();
+                }
+                else
+                {
+                    return new NotFoundResult();
+                }
             }
-            return new NotFoundResult();
 
+            catch
+            {
+                return new NotFoundResult();
+            }
         }
         [HttpGet]
         public async Task<IEnumerable<CustomerEntity>> GetAllAsync()
@@ -52,6 +62,26 @@ namespace assignment_3_api.Controllers
                 return await _context.Customers.ToListAsync();
             }
             catch { return null; }
+        }
+        [HttpDelete]
+        public async Task<ActionResult<CustomerModel>> DeleteAsync(int id)
+        {
+
+            try
+            {
+                var customerEntity = await _context.Customers.FindAsync(id);
+                if (customerEntity != null)
+                {
+                    _context.Customers.Remove(customerEntity);
+                    await _context.SaveChangesAsync();
+                    return new OkResult();
+                }
+                else
+                {
+                    return new NotFoundResult();
+                }
+            }
+            catch { return new NotFoundResult(); }
         }
     }
 }

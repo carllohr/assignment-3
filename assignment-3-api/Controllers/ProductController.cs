@@ -57,11 +57,24 @@ namespace assignment_3_api.Controllers
            
         }
         [HttpDelete]
-        public async Task DeleteAsync(int id)
+        public async Task<ActionResult<ProductModel>> DeleteAsync(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+           
+            try
+            {
+                var productEntity = await _context.Products.FindAsync(id);
+                if (productEntity != null)
+                {
+                    _context.Products.Remove(productEntity);
+                    await _context.SaveChangesAsync();
+                    return new OkResult();
+                }
+                else
+                {
+                    return new NotFoundResult();
+                }
+            }
+            catch { return new NotFoundResult(); }
         }
     }
 }

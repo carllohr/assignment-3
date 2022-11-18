@@ -9,7 +9,8 @@
       Title="CustomerPage">
 
     <Grid>
-        <StackPanel>
+        <StackPanel Margin="10">
+            <TextBlock Text="Existing Customers: "/>
             <ComboBox x:Name="cb_Customers" DisplayMemberPath="FullName" SelectionChanged="cb_Customers_SelectionChanged"/>
             <TextBlock Text="First name: "/>
             <TextBox x:Name="tb_Firstname" />
@@ -17,8 +18,9 @@
             <TextBox x:Name="tb_Lastname"/>
             <TextBlock Text="Email: "/>
             <TextBox x:Name="tb_Email"/>
-            <Button x:Name="btn_Addcustomer" Content="Add customer" Click="btn_Addcustomer_Click"  Margin="20"/>
-            <Button x:Name="btn_Updatecustomer" Content="Update customer information" Click="btn_Updatecustomer_Click" Margin="20"/>
+            <Button x:Name="btn_Addcustomer" Content="Add customer" Click="btn_Addcustomer_Click"  Margin="10"/>
+            <Button x:Name="btn_Updatecustomer" Content="Update customer information" Click="btn_Updatecustomer_Click" Margin="10"/>
+            <Button x:Name="btn_Deletecustomer" Content="Delete customer" Click="btn_Deletecustomer_Click" Margin="10"/>
 
         </StackPanel>
         

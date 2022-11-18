@@ -34,9 +34,17 @@ namespace assignment_3.Pages
         }
         private ObservableCollection<ProductModel> productcollection = new ObservableCollection<ProductModel>();
 
-        private async void deleteBtn_Click(object sender, RoutedEventArgs e)
+        private async void btn_Deleteproduct_Click(object sender, RoutedEventArgs e)
         {
-       
+            var productURL = "https://localhost:7072/api/Product";
+            using var client = new HttpClient();
+            var product = (ProductModel)cb_Products.SelectedItem;
+
+            await client.DeleteAsync($"{productURL}?id={product.Id}");
+            await PopulateCombobox();
+
+            ClearText();
+            MessageBox.Show("Product removed");
         }
         public async Task PopulateCombobox()
         {

@@ -71,7 +71,7 @@ namespace assignment_3.Pages
             await client.PutAsJsonAsync($"{url}?id={customer.Id}", customer);
             await PopulateCombobox();
             ClearText();
-            cb_Customers.SelectedIndex = 1;
+            cb_Customers.SelectedIndex = -1;
         }
 
         public void ClearText()
@@ -91,6 +91,19 @@ namespace assignment_3.Pages
                 tb_Lastname.Text = customer.LastName;
                 tb_Email.Text = customer.Email;
             }
+        }
+
+        private async void btn_Deletecustomer_Click(object sender, RoutedEventArgs e)
+        {
+            var customerURL = "https://localhost:7072/api/Customer";
+            using var client = new HttpClient();
+            var customer = (CustomerModel)cb_Customers.SelectedItem;
+
+            await client.DeleteAsync($"{customerURL}?id={customer.Id}");
+            await PopulateCombobox();
+
+            ClearText();
+            MessageBox.Show("Customer removed");
         }
     }
 }

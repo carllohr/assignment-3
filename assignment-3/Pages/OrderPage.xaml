@@ -19,24 +19,24 @@
         
 
 
-        <StackPanel Grid.Column="0" Margin="20">
+        <StackPanel Grid.Column="0" Margin="5 0 0 0">
             <TextBlock Text="Choose customer: "/>
-            <ComboBox x:Name="cb_Customers" DisplayMemberPath="FullName" Margin="10"/>
-            <TextBlock Text="Add product: "/>
-            <ComboBox x:Name="cb_Products" DisplayMemberPath="Name" Margin="10"/>
+            <ComboBox x:Name="cb_Customers" DisplayMemberPath="FullName"/>
+            <TextBlock Text="Choose product: "/>
+            <ComboBox x:Name="cb_Products" DisplayMemberPath="Name"/>
             <TextBlock Text="Quantity:"/>
-            <TextBox x:Name="tb_Quantity" Margin="10"/>
+            <TextBox x:Name="tb_Quantity"/>
 
 
             <Button x:Name="btn_Add" Content="Add product to order" Click="btn_Add_Click"  Margin="10"/>
 
         </StackPanel>
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="6">
             <ListView Margin="10" Name="lvProducts" Grid.Row="1">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Price" Width="50" DisplayMemberBinding="{Binding Price}" />
+                        <GridViewColumn Header="Price" Width="50" DisplayMemberBinding="{Binding RowPrice}" />
                         <GridViewColumn Header="Quantity" Width="150" DisplayMemberBinding="{Binding Quantity}"/>
                     </GridView>
                 </ListView.View>
