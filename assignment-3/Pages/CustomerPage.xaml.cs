@@ -43,7 +43,7 @@ namespace assignment_3.Pages
 
             cb_Customers.ItemsSource = customerCollection;
         }
-        private async void btn_Addcustomer_Click(object sender, RoutedEventArgs e)
+        private async void btn_Createcustomer_Click(object sender, RoutedEventArgs e)
         {
             var url = "https://localhost:7072/api/Customer";
             using var client = new HttpClient();

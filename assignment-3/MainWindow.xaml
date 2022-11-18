@@ -13,9 +13,9 @@
             
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
+            <Button x:Name="btn_OrderPage" Content="Order menu" Click="btn_OrderPage_Click"/>
             <Button x:Name="btn_customerPage" Content="Customers" Click="btn_customerPage_Click" />
             <Button x:Name="btn_productPage" Content="Products" Click="btn_productPage_Click" />
-            <Button x:Name="btn_OrderPage" Content="Order menu" Click="btn_OrderPage_Click"/>
         </StackPanel>
 
         <Frame Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>

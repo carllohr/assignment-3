@@ -20,7 +20,7 @@
             <TextBlock Text="Product price: "/>
             <TextBox x:Name="tb_Productprice"/>
             <Button x:Name="btn_Createproduct" Content="Create product" Click="btn_Createproduct_Click" Margin="10"/>
-            <Button x:Name="btn_Updateproduct"  Content="Update product" Click="btn_Updateproduct_Click" Margin="10"/>
+            <Button x:Name="btn_Updateproduct"  Content="Update product information" Click="btn_Updateproduct_Click" Margin="10"/>
             <Button x:Name="btn_Deleteproduct" Content="Delete product" Click="btn_Deleteproduct_Click"  Margin="10"/>
         </StackPanel>
     </Grid>

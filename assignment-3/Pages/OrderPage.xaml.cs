@@ -105,7 +105,7 @@ namespace assignment_3.Pages
 
                     }) ;
 
-                    MessageBox.Show($"Order successfully created for customer {customer.FullName} for {totalPrice.ToString()} sek amount");
+                    MessageBox.Show($"Order successfully created for customer {customer.FullName} for {totalPrice.ToString()} sek");
                     products.Clear();
                 }
                 catch { }
