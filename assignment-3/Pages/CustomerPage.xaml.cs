@@ -29,7 +29,7 @@ namespace assignment_3.Pages
             InitializeComponent();
             PopulateCombobox().ConfigureAwait(false);
         }
-        public async Task PopulateCombobox()
+        public async Task PopulateCombobox() // gets list of customers from database to combobox
         {
 
             using var client = new HttpClient();
@@ -43,7 +43,7 @@ namespace assignment_3.Pages
 
             cb_Customers.ItemsSource = customerCollection;
         }
-        private async void btn_Createcustomer_Click(object sender, RoutedEventArgs e)
+        private async void btn_Createcustomer_Click(object sender, RoutedEventArgs e) // creates customer with security checks to avoid empty information
         {
             var url = "https://localhost:7072/api/Customer";
             using var client = new HttpClient();
@@ -64,7 +64,7 @@ namespace assignment_3.Pages
             }
         }
 
-        private async void btn_Updatecustomer_Click(object sender, RoutedEventArgs e)
+        private async void btn_Updatecustomer_Click(object sender, RoutedEventArgs e) // button method to update customer information, with some security checks
         {
             var url = "https://localhost:7072/api/Customer";
             using var client = new HttpClient();
@@ -107,7 +107,7 @@ namespace assignment_3.Pages
             }
         }
 
-        private async void btn_Deletecustomer_Click(object sender, RoutedEventArgs e)
+        private async void btn_Deletecustomer_Click(object sender, RoutedEventArgs e) // deletes customer
         {
             var customerURL = "https://localhost:7072/api/Customer";
             using var client = new HttpClient();

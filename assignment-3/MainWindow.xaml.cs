@@ -25,7 +25,7 @@ namespace assignment_3
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow() // sets orderpage as startup page
         {
             InitializeComponent();
             MainFrame.Content = new OrderPage();

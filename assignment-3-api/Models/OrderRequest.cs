@@ -10,7 +10,6 @@ namespace assignment_3_api.Models
         public int CustomerId { get; set; }
         public int Quantity { get; set; }
         public ObservableCollection<ProductModel> Products { get; set; } = null!;  
-        public decimal TotalPrice { get; set; }
-        public decimal RowPrice { get; set; }
+        public decimal TotalPrice { get; set; } 
     }
 }

@@ -13,7 +13,7 @@ namespace assignment_3.Models
         public string Description { get; set; } = null!;
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public decimal RowPrice
+        public decimal RowPrice // gets correct value for rowprice displayed in order listview
         {
             get
             {

@@ -17,19 +17,23 @@ namespace assignment_3_api.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CustomerRequest req)
+        public async Task<IActionResult> CreateAsync(CustomerRequest req) // creates new customer in database
         {
-            _context.Add(new CustomerEntity
+            try
             {
-                FirstName = req.FirstName,
-                LastName = req.LastName,
-                Email = req.Email
-            });
-            await _context.SaveChangesAsync();
-            return new OkResult();
+                _context.Add(new CustomerEntity
+                {
+                    FirstName = req.FirstName,
+                    LastName = req.LastName,
+                    Email = req.Email
+                });
+                await _context.SaveChangesAsync();
+                return new OkResult();
+            }
+            catch { return new NotFoundResult(); }
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(int id, CustomerRequest req)
+        public async Task<IActionResult> UpdateAsync(int id, CustomerRequest req) //updates customer information in database
         {
             try
             {
@@ -55,7 +59,7 @@ namespace assignment_3_api.Controllers
             }
         }
         [HttpGet]
-        public async Task<IEnumerable<CustomerEntity>> GetAllAsync()
+        public async Task<IEnumerable<CustomerEntity>> GetAllAsync() // gets all customers from database to a list
         {
             try
             {
@@ -64,9 +68,8 @@ namespace assignment_3_api.Controllers
             catch { return null; }
         }
         [HttpDelete]
-        public async Task<ActionResult<CustomerModel>> DeleteAsync(int id)
+        public async Task<ActionResult<CustomerModel>> DeleteAsync(int id) // deletes customer in database
         {
-
             try
             {
                 var customerEntity = await _context.Customers.FindAsync(id);

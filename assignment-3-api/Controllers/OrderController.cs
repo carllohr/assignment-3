@@ -17,30 +17,35 @@ namespace assignment_3_api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(OrderRequest req)
+        public async Task<IActionResult> CreateAsync(OrderRequest req) // method to create order in api and database, creates both order entity and orderrowentity
         {
-            var orderEntity = new OrderEntity
+            try
             {
-                Created = req.OrderDate = DateTime.Now,
-                CustomerId = req.CustomerId,
-                TotalPrice = req.TotalPrice,
-            };
-            _context.Orders.Add(orderEntity);
-            await _context.SaveChangesAsync();
-
-            foreach(var product in req.Products)
-            {
-                var orderRow = new OrderRowEntity
+                var orderEntity = new OrderEntity
                 {
-                    Quantity = product.Quantity,
-                    ProductId = product.Id,
-                    OrderId = orderEntity.Id,
-                    Price = product.RowPrice
+                    Created = req.OrderDate = DateTime.Now,
+                    CustomerId = req.CustomerId,
+                    TotalPrice = req.TotalPrice,
                 };
-                _context.OrderRows.Add(orderRow);
+                _context.Orders.Add(orderEntity);
                 await _context.SaveChangesAsync();
+
+                foreach (var product in req.Products)
+                {
+                    var orderRow = new OrderRowEntity
+                    {
+                        Quantity = product.Quantity,
+                        ProductId = product.Id,
+                        OrderId = orderEntity.Id,
+                        Price = product.RowPrice
+                    };
+                    _context.OrderRows.Add(orderRow);
+                    await _context.SaveChangesAsync();
+                }
+                return new OkResult();
             }
-            return new OkResult();
+            catch { return new NotFoundResult(); }
         }
     }
 }
+

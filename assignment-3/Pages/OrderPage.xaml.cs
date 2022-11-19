@@ -32,8 +32,8 @@ namespace assignment_3.Pages
             lvProducts.ItemsSource = products;
         }
 
-        private ObservableCollection<ProductModel> products = new ObservableCollection<ProductModel>();
-        public async Task PopulateCombobox()
+        private ObservableCollection<ProductModel> products = new ObservableCollection<ProductModel>(); // list for the products in our order, works as a 'shopping cart'
+        public async Task PopulateCombobox() // gets products and customers from database to two comboboxes
         {
             using var client = new HttpClient();
 
@@ -56,13 +56,13 @@ namespace assignment_3.Pages
         }
        
 
-        private void btn_Add_Click(object sender, RoutedEventArgs e)
+        private void btn_Add_Click(object sender, RoutedEventArgs e) // adds product to order, with security check 
         {
             var product = (ProductModel)cb_Products.SelectedItem;
 
             if (product != null)
             {
-                if (tb_Quantity.Text == "")
+                if (tb_Quantity.Text == "") // if user chooses not to input quantity of product, sets it to 1 automatically
                 {
                     product.Quantity = 1;
                 }
@@ -78,13 +78,13 @@ namespace assignment_3.Pages
 
         }
 
-        private async void btn_Createorder_Click(object sender, RoutedEventArgs e)
+        private async void btn_Createorder_Click(object sender, RoutedEventArgs e) // creates order, with security checks so order cannot be created without correct information
         {
             var url = "https://localhost:7072/api/Order";
             using var client = new HttpClient();
             var customer = (CustomerModel)cb_Customers.SelectedItem;
             decimal totalPrice = 0;
-            foreach (var item in products)
+            foreach (var item in products) // get total price of order
             {
                 totalPrice += item.Price * item.Quantity;
             }
@@ -111,7 +111,7 @@ namespace assignment_3.Pages
             }
         }
 
-        private void btn_Clearorder_Click(object sender, RoutedEventArgs e)
+        private void btn_Clearorder_Click(object sender, RoutedEventArgs e) // simple method to clear products in the order shopping cart
         {
             products.Clear();
             lvProducts.Items.Refresh();

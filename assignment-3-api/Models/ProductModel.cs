@@ -7,7 +7,7 @@
         public string Description { get; set; } = null!;
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public decimal RowPrice
+        public decimal RowPrice // gets the total price for each orderrow
         {
             get
             {

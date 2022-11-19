@@ -34,7 +34,7 @@ namespace assignment_3.Pages
         }
         private ObservableCollection<ProductModel> productcollection = new ObservableCollection<ProductModel>();
 
-        private async void btn_Deleteproduct_Click(object sender, RoutedEventArgs e)
+        private async void btn_Deleteproduct_Click(object sender, RoutedEventArgs e) // deletes selected product
         {
             var productURL = "https://localhost:7072/api/Product";
             using var client = new HttpClient();
@@ -46,7 +46,7 @@ namespace assignment_3.Pages
             ClearText();
             MessageBox.Show("Product removed");
         }
-        public async Task PopulateCombobox()
+        public async Task PopulateCombobox() // gets products from database to combobox
         {
 
             using var client = new HttpClient();
@@ -72,7 +72,7 @@ namespace assignment_3.Pages
             }
         }
 
-        private async void btn_Updateproduct_Click(object sender, RoutedEventArgs e)
+        private async void btn_Updateproduct_Click(object sender, RoutedEventArgs e) // updates product information with security check
         {
             var productURL = "https://localhost:7072/api/Product";
             using var client = new HttpClient();
@@ -108,7 +108,7 @@ namespace assignment_3.Pages
 
         
 
-        private async void btn_Createproduct_Click(object sender, RoutedEventArgs e)
+        private async void btn_Createproduct_Click(object sender, RoutedEventArgs e) // creates product, security check to not allow empty product information to be created
         {
             using var client = new HttpClient();
 
@@ -124,6 +124,7 @@ namespace assignment_3.Pages
                 ClearText();
 
                 await PopulateCombobox();
+                MessageBox.Show("Product created");
             }
             else
             {
