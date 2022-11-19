@@ -57,6 +57,7 @@ namespace assignment_3.Pages
                 });
                 await PopulateCombobox();
                 ClearText();
+                MessageBox.Show("Customer created");
             }
             else
             {
