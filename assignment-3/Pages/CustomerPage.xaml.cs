@@ -47,15 +47,21 @@ namespace assignment_3.Pages
         {
             var url = "https://localhost:7072/api/Customer";
             using var client = new HttpClient();
-
-            await client.PostAsJsonAsync(url, new CustomerRequest
+            if (tb_Firstname.Text != "" && tb_Lastname.Text != "" && tb_Email.Text != "")
             {
-                FirstName = tb_Firstname.Text,
-                LastName = tb_Lastname.Text,
-                Email = tb_Email.Text,
-            });
-            await PopulateCombobox();
-            ClearText();
+                await client.PostAsJsonAsync(url, new CustomerRequest
+                {
+                    FirstName = tb_Firstname.Text,
+                    LastName = tb_Lastname.Text,
+                    Email = tb_Email.Text,
+                });
+                await PopulateCombobox();
+                ClearText();
+            }
+            else
+            {
+                MessageBox.Show("You need to fill in all the fields to create a customer");
+            }
         }
 
         private async void btn_Updatecustomer_Click(object sender, RoutedEventArgs e)
@@ -64,14 +70,22 @@ namespace assignment_3.Pages
             using var client = new HttpClient();
 
             var customer = (CustomerModel)cb_Customers.SelectedItem;
-            customer.FirstName = tb_Firstname.Text;
-            customer.LastName = tb_Lastname.Text;
-            customer.Email = tb_Email.Text;
+            if (tb_Firstname.Text != "" && tb_Lastname.Text != "" && tb_Email.Text != "")
+            {
+                customer.FirstName = tb_Firstname.Text;
+                customer.LastName = tb_Lastname.Text;
+                customer.Email = tb_Email.Text;
 
-            await client.PutAsJsonAsync($"{url}?id={customer.Id}", customer);
-            await PopulateCombobox();
-            ClearText();
-            cb_Customers.SelectedIndex = -1;
+                await client.PutAsJsonAsync($"{url}?id={customer.Id}", customer);
+                await PopulateCombobox();
+                ClearText();
+                cb_Customers.SelectedIndex = -1;
+                MessageBox.Show("Customer information successfully updated");
+            }
+            else
+            {
+                MessageBox.Show("You cannot update a customer with empty information. Fill in all the fields to proceed");
+            }
         }
 
         public void ClearText()

@@ -77,15 +77,25 @@ namespace assignment_3.Pages
             var productURL = "https://localhost:7072/api/Product";
             using var client = new HttpClient();
             var product = (ProductModel)cb_Products.SelectedItem;
-            product.Name = tb_Productname.Text;
-            product.Description = tb_Description.Text;
-            product.Price = decimal.Parse(tb_Productprice.Text);
 
-            await client.PutAsJsonAsync($"{productURL}?id={product.Id}", product);
-            
-            ClearText();
+            if (tb_Productname.Text != "" && tb_Description.Text != "" && tb_Productprice.Text != "")
+            {
+                product.Name = tb_Productname.Text;
+                product.Description = tb_Description.Text;
+                product.Price = decimal.Parse(tb_Productprice.Text);
 
-            await PopulateCombobox();
+                await client.PutAsJsonAsync($"{productURL}?id={product.Id}", product);
+
+                ClearText();
+
+                await PopulateCombobox();
+                MessageBox.Show("Product information successfully updated");
+
+            }
+            else
+            {
+                MessageBox.Show("Cannot update product with empty information. Fill in all the fields to continue with the update.");
+            }
 
         }
 
@@ -102,17 +112,23 @@ namespace assignment_3.Pages
         {
             using var client = new HttpClient();
 
-            
-            await client.PostAsJsonAsync("https://localhost:7072/api/Product", new ProductRequest
+            if (tb_Productname.Text != "" && tb_Description.Text != "" && tb_Productprice.Text != "")
             {
-                Name = tb_Productname.Text,
-                Description = tb_Description.Text,
-                Price = decimal.Parse(tb_Productprice.Text)
-            });
+                await client.PostAsJsonAsync("https://localhost:7072/api/Product", new ProductRequest
+                {
+                    Name = tb_Productname.Text,
+                    Description = tb_Description.Text,
+                    Price = decimal.Parse(tb_Productprice.Text)
+                });
 
-            ClearText();
+                ClearText();
 
-            await PopulateCombobox();
+                await PopulateCombobox();
+            }
+            else
+            {
+                MessageBox.Show("Cannot create a product with empty information. Please fill in all the fields to create a product.");
+            }
         }
     }
 }
