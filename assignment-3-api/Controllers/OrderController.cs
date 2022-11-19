@@ -35,7 +35,7 @@ namespace assignment_3_api.Controllers
                     Quantity = product.Quantity,
                     ProductId = product.Id,
                     OrderId = orderEntity.Id,
-                    Price = req.RowPrice
+                    Price = product.RowPrice
                 };
                 _context.OrderRows.Add(orderRow);
                 await _context.SaveChangesAsync();
