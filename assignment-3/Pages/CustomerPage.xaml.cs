@@ -71,21 +71,28 @@ namespace assignment_3.Pages
             using var client = new HttpClient();
 
             var customer = (CustomerModel)cb_Customers.SelectedItem;
-            if (tb_Firstname.Text != "" && tb_Lastname.Text != "" && tb_Email.Text != "")
+            if (customer != null)
             {
-                customer.FirstName = tb_Firstname.Text;
-                customer.LastName = tb_Lastname.Text;
-                customer.Email = tb_Email.Text;
+                if (tb_Firstname.Text != "" && tb_Lastname.Text != "" && tb_Email.Text != "")
+                {
+                    customer.FirstName = tb_Firstname.Text;
+                    customer.LastName = tb_Lastname.Text;
+                    customer.Email = tb_Email.Text;
 
-                await client.PutAsJsonAsync($"{url}?id={customer.Id}", customer);
-                await PopulateCombobox();
-                ClearText();
-                cb_Customers.SelectedIndex = -1;
-                MessageBox.Show("Customer information successfully updated");
+                    await client.PutAsJsonAsync($"{url}?id={customer.Id}", customer);
+                    await PopulateCombobox();
+                    ClearText();
+                    cb_Customers.SelectedIndex = -1;
+                    MessageBox.Show("Customer information successfully updated");
+                }
+                else
+                {
+                    MessageBox.Show("You cannot update a customer with empty information. Fill in all the fields to proceed");
+                }
             }
             else
             {
-                MessageBox.Show("You cannot update a customer with empty information. Fill in all the fields to proceed");
+                MessageBox.Show("No customer selected, cannot update");
             }
         }
 
@@ -113,12 +120,18 @@ namespace assignment_3.Pages
             var customerURL = "https://localhost:7072/api/Customer";
             using var client = new HttpClient();
             var customer = (CustomerModel)cb_Customers.SelectedItem;
+            if (customer != null)
+            {
+                await client.DeleteAsync($"{customerURL}?id={customer.Id}");
+                await PopulateCombobox();
 
-            await client.DeleteAsync($"{customerURL}?id={customer.Id}");
-            await PopulateCombobox();
-
-            ClearText();
-            MessageBox.Show("Customer removed");
+                ClearText();
+                MessageBox.Show("Customer removed");
+            }
+            else
+            {
+                MessageBox.Show("No customer selected, cannot delete");
+            }
         }
     }
 }

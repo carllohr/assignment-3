@@ -39,12 +39,19 @@ namespace assignment_3.Pages
             var productURL = "https://localhost:7072/api/Product";
             using var client = new HttpClient();
             var product = (ProductModel)cb_Products.SelectedItem;
+            if (product != null)
+            {
 
-            await client.DeleteAsync($"{productURL}?id={product.Id}");
-            await PopulateCombobox();
+                await client.DeleteAsync($"{productURL}?id={product.Id}");
+                await PopulateCombobox();
 
-            ClearText();
-            MessageBox.Show("Product removed");
+                ClearText();
+                MessageBox.Show("Product removed");
+            }
+            else
+            {
+                MessageBox.Show("No product selected, cannot delete");
+            }
         }
         public async Task PopulateCombobox() // gets products from database to combobox
         {
@@ -77,24 +84,30 @@ namespace assignment_3.Pages
             var productURL = "https://localhost:7072/api/Product";
             using var client = new HttpClient();
             var product = (ProductModel)cb_Products.SelectedItem;
-
-            if (tb_Productname.Text != "" && tb_Description.Text != "" && tb_Productprice.Text != "")
+            if (product != null)
             {
-                product.Name = tb_Productname.Text;
-                product.Description = tb_Description.Text;
-                product.Price = decimal.Parse(tb_Productprice.Text);
+                if (tb_Productname.Text != "" && tb_Description.Text != "" && tb_Productprice.Text != "")
+                {
+                    product.Name = tb_Productname.Text;
+                    product.Description = tb_Description.Text;
+                    product.Price = decimal.Parse(tb_Productprice.Text);
 
-                await client.PutAsJsonAsync($"{productURL}?id={product.Id}", product);
+                    await client.PutAsJsonAsync($"{productURL}?id={product.Id}", product);
 
-                ClearText();
+                    ClearText();
 
-                await PopulateCombobox();
-                MessageBox.Show("Product information successfully updated");
+                    await PopulateCombobox();
+                    MessageBox.Show("Product information successfully updated");
 
+                }
+                else
+                {
+                    MessageBox.Show("Cannot update product with empty information. Fill in all the fields to continue with the update.");
+                }
             }
             else
             {
-                MessageBox.Show("Cannot update product with empty information. Fill in all the fields to continue with the update.");
+                MessageBox.Show("No product selected, cannot update");
             }
 
         }
